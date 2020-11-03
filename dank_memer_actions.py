@@ -8,6 +8,8 @@ import cv2
 # https://github.com/UB-Mannheim/tesseract/wiki
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
 
+plusButtonCenterLocation = pyautogui.locateCenterOnScreen('discord button.png')
+
 
 def fish():
     message_on_discord('pls fish')
@@ -48,7 +50,8 @@ def sell():
 
 
 def message_on_discord(command):
-    pyautogui.click(x=393, y=1001)
+    pyautogui.click(plusButtonCenterLocation.x + 50,
+                    plusButtonCenterLocation.y)
     pyautogui.typewrite(command)
     pyautogui.typewrite(['enter'])
     time.sleep(5)
@@ -71,7 +74,8 @@ def read_and_type():
 
 
 def screen_shot_and_read_text():
-    pyautogui.screenshot(region=(380, 930, 500, 20),
+    pyautogui.screenshot(region=(plusButtonCenterLocation.x + 25,
+                                 plusButtonCenterLocation.y - 64, 500, 20),
                          imageFilename='screen_shot.png')
     img = cv2.imread('screen_shot.png')
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -79,3 +83,11 @@ def screen_shot_and_read_text():
     read_text = pytesseract.image_to_string(img, lang='eng')
     read_text = read_text.replace('', '')
     return read_text
+
+
+def detect_button():
+    if str(plusButtonCenterLocation) == 'None':
+        print("Unable to detect discord message input")
+        return False
+    else:
+        return True

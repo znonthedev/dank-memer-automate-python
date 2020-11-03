@@ -14,5 +14,6 @@ def start_bot():
     s.enter(35, 0, start_bot)
 
 
-s.enter(1, 0, start_bot)
-s.run()
+if detect_button():
+    s.enter(1, 0, start_bot)
+    s.run()
